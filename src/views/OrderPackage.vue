@@ -2,7 +2,7 @@
   <div>
     <h1>包裹入库</h1>
 
-    <a-form>
+    <a-form :form="form" @submit="handleSubmit">
       <a-form-item label="运单号" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
         <a-input
           v-decorator="[
@@ -25,7 +25,7 @@
   </div>
 </template>
 
-<script>
+<script scope>
 // @ is an alias to /src
 import HelloWorld from "@/components/HelloWorld.vue";
 
@@ -33,6 +33,20 @@ export default {
   name: "packageInput",
   components: {
     HelloWorld
+  },data () {
+    return {
+      form: this.$form.createForm(this),
+    };
+  },
+  methods: {
+    handleSubmit (e) {
+      e.preventDefault();
+      this.form.validateFields((err, values) => {
+        if (!err) {
+          console.log('Received values of form: ', values);
+        }
+      });
+    }
   }
 };
 </script>
